@@ -1,158 +1,36 @@
-# Sticky-Memo
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Sticky-Memo is a sticky notes application built using React.js + Vite along with MUI. This documentation will guide you through the process of contributing to this project.
+## Getting Started
 
-## Tech Stack
+First, run the development server:
 
-<table>
-    <tr>
-     <td>Frontend</td>
-     <td><img src="https://skillicons.dev/icons?i=react,mui,vite" /></td>
-    </tr>
-    <tr>
-     <td>CI/CD</td>
-     <td><img src="https://skillicons.dev/icons?i=netlify,githubactions" /></td>
-    </tr>
-</table>
-
-## Table of Contents
-
-- [Installation](#installation)
-  - [Clone the Repository](#clone-the-repository)
-  - [Frontend Installation](#frontend-installation)
-  <!-- - [Docker Installation](#docker-installation) -->
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-  - [Forking the Repository](#forking-the-repository)
-  - [Cloning the Repository](#cloning-the-repository)
-  - [Creating a Branch](#creating-a-branch)
-  - [Making Changes](#making-changes)
-  - [Committing Changes](#committing-changes)
-  - [Pushing Changes](#pushing-changes)
-  - [Creating a Pull Request](#creating-a-pull-request)
-- [Contributors](#contributors)
-- [License](#license)
-
-## Installation
-
-### Clone the Repository
-
-1. **Fork the repository** by clicking the "Fork" button at the top right of the repository page on GitHub.
-   ![Forking the Repository](https://user-images.githubusercontent.com/github-fork-button.png)
-2. **Clone your forked repository** to your local machine:
-    ```sh
-    git clone https://github.com/your-username/Sticky-Memo.git
-    ```
-3. Navigate to the project directory:
-    ```sh
-    cd Sticky-Memo
-    ```
-
-### Frontend Installation
-
-After cloning the repository:
-
-1. **Install the dependencies**:
-    ```sh
-    npm install
-    ```
-2. **Start the development server**:
-    ```sh
-    npm run dev
-    ```
-
-<!-- ### Docker Installation
-
-If you prefer using Docker:
-
-1. **Pull the Docker image**:
-    ```sh
-    docker pull narainkarthik/stickymemo:v1.0.0
-    ```
-2. **Run the Docker container**:
-    ```sh
-    docker run -d -p 3000:3000 narainkarthik/stickymemo:v1.0.0
-    ``` -->
-
-## Project Structure
-
-The `frontend` directory contains the React application.
-
-```
-frontend/
-├── public/                 # Public assets
-├── src/                    # Source code
-│   ├── assets/             # Static assets
-│   ├── components/         # Reusable UI components
-│   ├── pages/              # Application pages
-│   ├── styles/             # Styling files
-│   ├── utils/              # Utility functions
-│   ├── App.jsx             # Main component that sets up routes
-│   └── main.jsx            # Entry point of the React application
-├── index.html              # HTML template
-├── package.json            # Project metadata and dependencies
-└── vite.config.js          # Vite configuration
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Contributing
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-We welcome contributions! To contribute to Sticky-Memo, follow these steps:
+You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-### Forking the Repository
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-1. Fork the repository by clicking the "Fork" button at the top right of the repository page on GitHub.
-   ![Forking the Repository](https://user-images.githubusercontent.com/github-fork-button.png)
+## Learn More
 
-### Cloning the Repository
+To learn more about Next.js, take a look at the following resources:
 
-2. Clone your forked repository to your local machine:
-    ```sh
-    git clone https://github.com/your-username/Sticky-Memo.git
-    ```
-3. Navigate to the project directory:
-    ```sh
-    cd Sticky-Memo
-    ```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-### Creating a Branch
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-4. Create a new branch for your feature or bug fix (create a branch according to the issue working on):
-    ```sh
-    git switch -c your-branch-name
-    ```
+## Deploy on Vercel
 
-### Making Changes
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-5. Make your changes to the codebase. You can edit the files using your preferred code editor.
-
-### Committing Changes
-
-6. Add the changes to the staging area:
-    ```sh
-    git add .
-    ```
-7. Commit the changes with a descriptive message:
-    ```sh
-    git commit -m "Description of your changes"
-    ```
-
-### Pushing Changes
-
-8. Push the changes to your forked repository:
-    ```sh
-    git push origin your-branch-name
-    ```
-
-### Creating a Pull Request
-
-9. Create a pull request from your forked repository to the main repository. Go to the "Pull Requests" tab on the main repository, and click "New Pull Request". Follow the instructions to create your pull request.
-
-## Contributors
-
-We appreciate the contributions of the following individuals: [Contributors](https://github.com/narainkarthikv/Sticky-Memo/blob/main/Contributors.md)
-
-This is just the beginning! I look forward to making more meaningful contributions and collaborating with this amazing community. Let's build something great together and make Sticky-Memo the best it can be! ❤️🤝
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/narainkarthikv/Sticky-Memo/blob/main/MIT-LICENSE.txt) file for details.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
