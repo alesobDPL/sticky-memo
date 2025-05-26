@@ -1,7 +1,8 @@
-import React from "react";
+'use client'
+
 import { Box, Typography, Paper } from "@mui/material";
 import { useRecoilValue } from "recoil";
-import { itemsState } from "../utils/state";
+import { itemsState } from "@/utils/state";
 import { format, eachDayOfInterval, startOfMonth, endOfMonth } from "date-fns";
 
 const RoadmapView = () => {

@@ -1,15 +1,17 @@
-import React, { useState, useTransition, useEffect, useCallback, useRef } from 'react';
+'use client'
+
+import { useState, useTransition, useEffect, useCallback, useRef } from 'react';
 import { useRecoilState } from 'recoil';
-import { itemsState, snackbarState } from '../utils/state';
-import TableCard from '../components/Table/TableCard';
-import CommonFilter from '../components/common/CommonFilter';
-import CommonSnackbar from '../components/common/CommonSnackbar';
+import { itemsState, snackbarState } from '@/utils/state';
+import TableCard from '@/components/Table/TableCard';
+import CommonFilter from '@/components/common/CommonFilter';
+import CommonSnackbar from '@/components/common/CommonSnackbar';
 import { Box, Table, TableBody, TableCell, TableHead, TableRow, Grid } from '@mui/material';
-import { filterItems } from '../utils/helper';
-import { useItemUtils } from '../utils/useItemUtils';
-import { tableListStyles, tableStyles, tableHeadStyles, tableCellStyles, boxStyles, scrollBoxStyles } from '../styles/tableListStyles';
-import AddButton from '../components/common/AddButton';
-import { debounce } from '../utils/debounce';
+import { filterItems } from '@/utils/helper';
+import { useItemUtils } from '@/utils/useItemUtils';
+import { tableListStyles, tableStyles, tableHeadStyles, tableCellStyles, boxStyles, scrollBoxStyles } from '@/styles/tableListStyles';
+import AddButton from '@/components/common/AddButton';
+import { debounce } from '@/utils/debounce';
 
 const TableList = (props) => {
   const [items, setItems] = useRecoilState(itemsState);

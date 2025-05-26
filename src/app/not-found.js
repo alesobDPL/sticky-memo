@@ -1,10 +1,12 @@
+'use client'
+
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { useTheme } from '@mui/material/styles';
+import { Router } from "next/router";
 
 const NotFound = () => {
-    const navigate = useNavigate();
+    const router = Router();
     const theme = useTheme();
 
     return (
@@ -29,7 +31,7 @@ const NotFound = () => {
             <Button
                 variant="contained"
                 color="primary"
-                onClick={() => navigate("/")}
+                onClick={() => router.push("/")}
                 sx={{ mt: 2 }}
             >
                 Go Back to Home

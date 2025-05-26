@@ -1,16 +1,19 @@
-import React, { useState, useTransition, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import { itemsState, snackbarState } from '../utils/state';
-import BoardCard from '../components/Board/BoardCard';
-import CommonFilter from '../components/common/CommonFilter';
-import CommonSnackbar from '../components/common/CommonSnackbar';
-import { Box, Grid } from '@mui/material';
-import { addItem, filterItems } from '../utils/helper';
-import { useItemUtils } from '../utils/useItemUtils';
-import { boardListStyles, scrollBoxStyles } from '../styles/boardListStyles';
-import AddButton from '../components/common/AddButton';
+'use client'
 
-const BoardList = (props) => {
+import { useState, useTransition, useEffect, useCallback, useRef } from 'react';
+import { useRecoilState } from 'recoil';
+import { itemsState, snackbarState } from '@/utils/state';
+import NoteCard from '@/components/Note/NoteCard';
+import CommonFilter from '@/components/common/CommonFilter';
+import CommonSnackbar from '@/components/common/CommonSnackbar';
+import { Box, Grid } from '@mui/material';
+import { filterItems } from '@/utils/helper';
+import { useItemUtils } from '@/utils/useItemUtils';
+import { noteListStyles, scrollBoxStyles } from '@/styles/noteListStyles';
+import AddButton from '@/components/common/AddButton';
+import { debounce } from '@/utils/debounce';
+
+const NoteList = (props) => {
   const [items, setItems] = useRecoilState(itemsState);
   const [snackbar, setSnackbar] = useRecoilState(snackbarState);
   const [filter, setFilter] = useState('');
@@ -18,14 +21,7 @@ const BoardList = (props) => {
   const [editingIndex, setEditingIndex] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [isPending, startTransition] = useTransition();
-
-  // Cleanup effect for drag and drop
-  useEffect(() => {
-    return () => {
-      setDraggingIndex(null);
-      setAnchorEl(null);
-    };
-  }, []);
+  const dragTimeoutRef = useRef(null);
 
   const {
     isEditing,
@@ -35,22 +31,46 @@ const BoardList = (props) => {
     editedContent,
     setEditedContent,
     handleEdit,
-  } = useItemUtils({ ...props, type: 'Row' });
+  } = useItemUtils({ ...props, type: 'Note' });
 
-  const handleDragStart = (index) => setDraggingIndex(index);
-  const handleDragOver = (event) => event.preventDefault();
-  const handleDrop = (index, event) => {
+  // Cleanup effect for all event listeners and timeouts
+  useEffect(() => {
+    return () => {
+      setDraggingIndex(null);
+      setAnchorEl(null);
+      if (dragTimeoutRef.current) {
+        clearTimeout(dragTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const handleDragStart = useCallback((index) => {
+    setDraggingIndex(index);
+  }, []);
+
+  const handleDragOver = useCallback((event) => {
+    event.preventDefault();
+  }, []);
+
+  const debouncedSetItems = useCallback(
+    debounce((updatedItems) => {
+      startTransition(() => setItems(updatedItems));
+    }, 100),
+    [setItems]
+  );
+
+  const handleDrop = useCallback((index, event) => {
     event.preventDefault();
     if (draggingIndex !== null && draggingIndex !== index) {
       const updatedItems = [...items];
       const [draggedItem] = updatedItems.splice(draggingIndex, 1);
       updatedItems.splice(index, 0, draggedItem);
-      startTransition(() => setItems(updatedItems));
+      debouncedSetItems(updatedItems);
     }
     setDraggingIndex(null);
-  };
+  }, [draggingIndex, items, debouncedSetItems]);
 
-  const handleSave = (item, id, newTitle, newContent) => {
+  const handleSave = useCallback((item, id, newTitle, newContent) => {
     setIsEditing(false);
     const updatedItems = items.map((item, index) =>
       index === id ? { 
@@ -62,36 +82,42 @@ const BoardList = (props) => {
       } : item
     );
     startTransition(() => setItems(updatedItems));
-  };
+  }, [items, setItems, setIsEditing]);
 
-  const filteredItems = filterItems(items, filter);
-
-  const handleClickPopover = (event, index) => {
+  const handleClickPopover = useCallback((event, index) => {
     setEditingIndex(index);
     setAnchorEl(event.currentTarget);
-  };
-  const handleClosePopover = () => setAnchorEl(null);
+  }, []);
 
-  const addBoard = () => {
-    const newBoard = { 
-      title: 'New Board',
+  const handleClosePopover = useCallback(() => {
+    setAnchorEl(null);
+  }, []);
+
+  const addNote = useCallback(() => {
+    const newNote = { 
+      title: 'New Note',
       content: '',
       startDate: null,
       dueDate: null,
       checked: false,
       held: false
     };
-    setItems([...items, newBoard]);
-  };
+    startTransition(() => setItems(prev => [...prev, newNote]));
+  }, [setItems]);
+
+  const filteredItems = filterItems(items, filter);
 
   return (
-    <Box sx={boardListStyles}>
+    <Box sx={noteListStyles}>
       <CommonSnackbar snackbar={snackbar} setSnackbar={setSnackbar} />
-      <CommonFilter filter={filter} setFilter={setFilter} />
+      <Box>
+        <CommonFilter filter={filter} setFilter={setFilter} />
+      </Box>
+
       <Grid container spacing={2} sx={scrollBoxStyles}>
         {filteredItems.map((item, index) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-            <BoardCard
+            <NoteCard
               key={index}
               item={item}
               index={index}
@@ -117,11 +143,11 @@ const BoardList = (props) => {
           </Grid>
         ))}
         <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', padding: '16px' }}>
-          <AddButton onClick={addBoard} />
+          <AddButton onClick={addNote} />
         </Grid>
       </Grid>
     </Box>
   );
 };
 
-export default BoardList;
+export default NoteList;
